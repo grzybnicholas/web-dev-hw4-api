@@ -1,0 +1,14 @@
+{
+    "name": "music-heatmap-backend",
+    "version": "1.0.0",
+    "main": "musicApi.js",  
+    "scripts": {
+      "start": "node musicApi.js"  
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "node-fetch": "^2.7.0",
+      "dotenv": "^16.4.5",
+      "cors": "^2.8.5"
+    }
+  }
