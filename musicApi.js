@@ -6,8 +6,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors()); 
 
-const LASTFM_API_KEY = process.env.LASTFM_API_KEY; 
-
+const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 
 app.get('/lastfm/heatmap', async (req, res) => {
   try {
@@ -22,7 +21,6 @@ app.get('/lastfm/heatmap', async (req, res) => {
 
     const dayData = [];
 
-    // Loop through all days in the month
     for (let day = 1; day <= endOfMonth.getDate(); day++) {
       const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
       const startTimestamp = new Date(`${date}T00:00:00Z`).getTime() / 1000; 
@@ -36,13 +34,13 @@ app.get('/lastfm/heatmap', async (req, res) => {
       const tracks = data.recenttracks.track;
       const trackCount = {};
 
-      // Count the number of times each track was played on that day
+   
       tracks.forEach((track) => {
         const trackName = track.name;
         trackCount[trackName] = (trackCount[trackName] || 0) + 1;
       });
 
-      // Find the most played track for the day
+ 
       const mostPlayed = Object.entries(trackCount).sort((a, b) => b[1] - a[1])[0];
 
       dayData.push({
@@ -52,7 +50,7 @@ app.get('/lastfm/heatmap', async (req, res) => {
       });
     }
 
-    // Send back the aggregated daily data
+
     res.json(dayData);
   } catch (error) {
     console.error('Error fetching data from Last.fm:', error.message);
@@ -60,6 +58,6 @@ app.get('/lastfm/heatmap', async (req, res) => {
   }
 });
 
-// Start the server
-const PORT = 5000;
+
+const PORT = process.env.PORT || 5000;  
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
